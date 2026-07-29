@@ -9,6 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,7 +26,8 @@ jobs:
           mkdir project
           unzip -q cuotix-gps-source-v1.1.2.zip -d project
           chmod +x project/gradlew
-sed -i 's/androidx.security:security-crypto:1.1.1-alpha06/androidx.security:security-crypto:1.1.0-alpha06/g' project/app/build.gradle.kts
+          sed -i 's/androidx.security:security-crypto:1.1.1-alpha06/androidx.security:security-crypto:1.1.0-alpha06/g' project/app/build.gradle.kts
+
       - name: Build unsigned release APK
         working-directory: project
         run: ./gradlew --no-daemon clean assembleRelease
@@ -35,6 +37,7 @@ sed -i 's/androidx.security:security-crypto:1.1.1-alpha06/androidx.security:secu
         run: |
           set -euo pipefail
           mkdir -p artifact/android-build-tools/lib
+
           APK="$(find project/app/build/outputs/apk/release -maxdepth 1 -type f -name '*unsigned*.apk' | head -n 1)"
           test -n "$APK"
           cp "$APK" artifact/cuotix-gps-complemento-v1.1.2-unsigned.apk
@@ -42,10 +45,13 @@ sed -i 's/androidx.security:security-crypto:1.1.1-alpha06/androidx.security:secu
           BUILD_TOOLS_DIR="$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
           test -x "$BUILD_TOOLS_DIR/zipalign"
           test -x "$BUILD_TOOLS_DIR/apksigner"
+
           cp "$BUILD_TOOLS_DIR/zipalign" artifact/android-build-tools/
           cp "$BUILD_TOOLS_DIR/apksigner" artifact/android-build-tools/
           cp "$BUILD_TOOLS_DIR/lib/apksigner.jar" artifact/android-build-tools/lib/
-          chmod +x artifact/android-build-tools/zipalign artifact/android-build-tools/apksigner
+
+          chmod +x artifact/android-build-tools/zipalign
+          chmod +x artifact/android-build-tools/apksigner
 
           printf '%s\n' \
             'APK release sin firmar de CUOTIX GPS 1.1.2.' \
