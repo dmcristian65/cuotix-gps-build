@@ -25,7 +25,7 @@ jobs:
           mkdir project
           unzip -q cuotix-gps-source-v1.1.2.zip -d project
           chmod +x project/gradlew
-
+sed -i 's/androidx.security:security-crypto:1.1.1-alpha06/androidx.security:security-crypto:1.1.0-alpha06/g' project/app/build.gradle.kts
       - name: Build unsigned release APK
         working-directory: project
         run: ./gradlew --no-daemon clean assembleRelease
