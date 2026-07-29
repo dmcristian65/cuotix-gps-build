@@ -1,0 +1,13 @@
+CUOTIX GPS 1.1.2 — PAQUETE SEGURO PARA GITHUB
+
+Este paquete NO contiene la clave privada ni las contraseñas de firma.
+
+1. Descomprimir este ZIP.
+2. En GitHub abrir dmcristian65/cuotix-gps-build.
+3. Elegir Add file > Upload files.
+4. Arrastrar TODO el contenido de la carpeta descomprimida.
+   En Chromebook, si no se ve la carpeta .github, pulsar Ctrl+H para mostrar archivos ocultos.
+5. Confirmar con Commit changes.
+
+Al subirlo, GitHub Actions compilará automáticamente el APK release sin firmar.
+La firma final se realizará fuera del repositorio con la clave privada original.
